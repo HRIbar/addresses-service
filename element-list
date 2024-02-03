@@ -1,0 +1,6 @@
+com.addresses.service
+com.addresses.service.database.entity
+com.addresses.service.database.repository
+com.addresses.service.database.service
+com.addresses.service.web
+com.addresses.service.web.config

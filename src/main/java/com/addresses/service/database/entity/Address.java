@@ -1,9 +1,11 @@
 package com.addresses.service.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
 import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "addresses") // Specifies the table name explicitly
@@ -24,6 +26,7 @@ public class Address {
 
     @Transient // This field is not persisted
     @Getter @Setter
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -33,6 +36,12 @@ public class Address {
 
     public Address() {
         // Default constructor
+    }
+
+    public void populateUserId() {
+        if (this.user != null) {
+            this.userId = this.user.getId();
+        }
     }
 
     // Constructors, getters, and setters

@@ -50,6 +50,7 @@ public class AddressService {
     public Optional<List<Address>> findAddressesByUserId(Long userId) {
         // Use the repository method to find addresses by user ID
         List<Address> addresses = addressRepository.findByUser_Id(userId);
+        addresses.forEach(Address::populateUserId);
         return Optional.ofNullable(addresses.isEmpty() ? null : addresses);
     }
 
