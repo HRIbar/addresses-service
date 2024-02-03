@@ -30,10 +30,20 @@ public class AddressService {
     }
 
     public Address updateAddress(Address address) {
-        return addressRepository.save(address); // save acts as an upsert
+        return addressRepository.save(address);
     }
 
     public void deleteAddress(Long id) {
         addressRepository.deleteById(id);
+    }
+
+    public Optional<List<Address>> findAddressesByUserId(Long userId) {
+        // Use the repository method to find addresses by user ID
+        List<Address> addresses = addressRepository.findByUserId(userId);
+        return Optional.ofNullable(addresses.isEmpty() ? null : addresses);
+    }
+
+    public Optional<Address>  findAddressById(Long addressId) {
+        return addressRepository.findById(addressId);
     }
 }
