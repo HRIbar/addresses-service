@@ -1,31 +1,30 @@
-package com.addresses.service.common;
+package com.addresses.service.database.entity;
 
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
-@Getter
 @Entity
 @Table(name = "addresses") // Specifies the table name explicitly
 public class Address {
     // Constructors, Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter @Setter
+    @Setter
     private Long id;
-    @Getter @Setter
+    @Setter
     private String streetNumber;
-    @Getter @Setter
+    @Setter
     private String street;
-    @Getter @Setter
+    @Setter
     private Integer postalCode;
-    @Getter @Setter
+    @Setter
     private String postOffice;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id") // This column is the foreign key
-    @Getter @Setter
+    @Setter
     private User user;
 
     public Address() {
