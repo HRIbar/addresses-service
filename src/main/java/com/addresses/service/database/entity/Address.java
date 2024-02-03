@@ -11,16 +11,20 @@ public class Address {
     // Constructors, Getters and Setters
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Setter
+    @Getter @Setter
     private Long id;
-    @Setter
+    @Getter @Setter
     private String streetNumber;
-    @Setter
+    @Getter @Setter
     private String street;
-    @Setter
+    @Getter @Setter
     private Integer postalCode;
-    @Setter
+    @Getter @Setter
     private String postOffice;
+
+    @Transient // This field is not persisted
+    @Getter @Setter
+    private Long userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id") // This column is the foreign key

@@ -1,7 +1,9 @@
 package com.addresses.service.database.service;
 
 import com.addresses.service.database.entity.Address;
+import com.addresses.service.database.entity.User;
 import com.addresses.service.database.repository.AddressRepository;
+import com.addresses.service.database.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -12,12 +14,20 @@ public class AddressService {
 
     private final AddressRepository addressRepository;
 
+    private final UserRepository userRepository;
+
     @Autowired
-    public AddressService(AddressRepository addressRepository) {
+    public AddressService(AddressRepository addressRepository, UserRepository userRepository) {
         this.addressRepository = addressRepository;
+        this.userRepository = userRepository;
     }
 
     public Address saveAddress(Address address) {
+        if (address.getUserId() != null) {
+            User user = userRepository.findById(address.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+            address.setUser(user);
+        }
+
         return addressRepository.save(address);
     }
 
@@ -39,7 +49,7 @@ public class AddressService {
 
     public Optional<List<Address>> findAddressesByUserId(Long userId) {
         // Use the repository method to find addresses by user ID
-        List<Address> addresses = addressRepository.findByUserId(userId);
+        List<Address> addresses = addressRepository.findByUser_Id(userId);
         return Optional.ofNullable(addresses.isEmpty() ? null : addresses);
     }
 
