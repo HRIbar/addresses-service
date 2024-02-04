@@ -31,10 +31,6 @@ public class AddressService {
         return addressRepository.save(address);
     }
 
-    public Optional<Address> getAddressById(Long id) {
-        return addressRepository.findById(id);
-    }
-
     public List<Address> getAllAddresses() {
         return addressRepository.findAll();
     }
@@ -47,14 +43,17 @@ public class AddressService {
         addressRepository.deleteById(id);
     }
 
-    public Optional<List<Address>> findAddressesByUserId(Long userId) {
+    public List<Address> findAddressesByUserId(Long userId) {
         // Use the repository method to find addresses by user ID
         List<Address> addresses = addressRepository.findByUser_Id(userId);
         addresses.forEach(Address::populateUserId);
-        return Optional.ofNullable(addresses.isEmpty() ? null : addresses);
+        return addresses;
     }
 
-    public Optional<Address>  findAddressById(Long addressId) {
-        return addressRepository.findById(addressId);
+    public Address findAddressById(Long addressId) {
+        Optional<Address> addressOptional = addressRepository.findById(addressId);
+        Address address = addressOptional.orElseThrow(() -> new RuntimeException("Address not found"));
+        address.populateUserId();
+        return address;
     }
 }
