@@ -22,13 +22,19 @@ public class AddressService {
         this.userRepository = userRepository;
     }
 
-    public Address saveAddress(Address address) {
-        if (address.getUserId() != null) {
-            User user = userRepository.findById(address.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
-            address.setUser(user);
-        }
+    public Address saveAddress(Address address) throws Exception {
+        Long userId = address.getUserId();
+        long addressCount = addressRepository.countByUser_Id(userId);
 
-        return addressRepository.save(address);
+        if (addressCount < 3) {
+            if (address.getUserId() != null) {
+                User user = userRepository.findById(address.getUserId()).orElseThrow(() -> new RuntimeException("User not found"));
+                address.setUser(user);
+            }
+            return addressRepository.save(address);
+        } else {
+            throw new Exception("A user can only have a maximum of three addresses.");
+        }
     }
 
     public List<Address> getAllAddresses() {

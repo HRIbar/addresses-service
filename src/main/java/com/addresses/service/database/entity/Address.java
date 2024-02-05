@@ -23,6 +23,8 @@ public class Address {
     private Integer postalCode;
     @Getter @Setter
     private String postOffice;
+    @Getter @Setter
+    private Boolean defaultAddress;
 
     @Transient // This field is not persisted
     @Getter @Setter
@@ -31,7 +33,7 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id") // This column is the foreign key
-    @Setter
+    @Getter @Setter
     private User user;
 
     public Address() {
