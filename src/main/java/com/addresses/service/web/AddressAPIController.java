@@ -3,6 +3,7 @@ package com.addresses.service.web;
 import com.addresses.service.database.entity.Address;
 import com.addresses.service.database.service.AddressService;
 import com.addresses.service.service.AddressDTOService;
+import com.addresses.service.service.AddressValidationService;
 import com.addresses.service.web.dto.AddressDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,13 @@ public class AddressAPIController {
 
     private final AddressDTOService addressDTOService;
 
+    private final AddressValidationService addressValidationService;
+
     @Autowired
-    public AddressAPIController(AddressService addressService, AddressDTOService addressDTOService) {
+    public AddressAPIController(AddressService addressService, AddressDTOService addressDTOService, AddressValidationService addressValidationService) {
         this.addressService = addressService;
         this.addressDTOService = addressDTOService;
+        this.addressValidationService = addressValidationService;
     }
 
     @GetMapping("/user/{userId}")
@@ -36,6 +40,11 @@ public class AddressAPIController {
     @PostMapping
     public ResponseEntity<?> saveAddress(@RequestBody AddressDTO addressDTO) {
         try {
+            if (!addressValidationService.isValidPostalCodeCombination(
+                    addressDTO.getPostalCode(), addressDTO.getPostOffice())) {
+                throw new IllegalArgumentException("Invalid postal code and post office combination.");
+            }
+
             Address savedAddress = addressService.saveAddress(addressDTOService.convertToEntity(addressDTO));
             return ResponseEntity.ok(addressDTOService.convertToDTO(savedAddress));
         } catch (Exception e) {
@@ -46,6 +55,11 @@ public class AddressAPIController {
     @PutMapping
     public ResponseEntity<?> updateAddress(@RequestBody AddressDTO addressDTO) {
         try {
+            if (!addressValidationService.isValidPostalCodeCombination(
+                    addressDTO.getPostalCode(), addressDTO.getPostOffice())) {
+                throw new IllegalArgumentException("Invalid postal code and post office combination.");
+            }
+
             Address updatedAddress = addressService.updateAddress(addressDTO);
             AddressDTO updatedAddressDTO = addressDTOService.convertToDTO(updatedAddress); // Convert back to DTO
             return ResponseEntity.ok(updatedAddressDTO);
