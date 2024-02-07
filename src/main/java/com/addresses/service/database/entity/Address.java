@@ -10,9 +10,9 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "addresses") // Specifies the table name explicitly
+@Table(name = "addresses")
 public class Address {
-    // Constructors, Getters and Setters
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter
@@ -54,6 +54,4 @@ public class Address {
         calendar.add(Calendar.MONTH, 1);
         this.deliveryDate = calendar.getTime();
     }
-
-    // Constructors, getters, and setters
 }

@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "users") // Specifies the table name explicitly
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,10 +23,8 @@ public class User {
     private Set<Address> addresses = new HashSet<>();
 
     public User() {
-        // Default constructor
-    }
 
-    // Constructors, getters, and setters
+    }
     public void addAddress(Address address) {
         addresses.add(address);
         address.setUser(this);

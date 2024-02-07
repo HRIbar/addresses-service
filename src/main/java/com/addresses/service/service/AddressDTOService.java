@@ -28,7 +28,6 @@ public class AddressDTOService {
 
     public Address convertToEntity(AddressDTO addressDTO) {
         Address address = new Address();
-        // Set properties from DTO to Address entity
         address.setStreetNumber(addressDTO.getStreetNumber());
         address.setStreet(addressDTO.getStreet());
         address.setPostalCode(addressDTO.getPostalCode());

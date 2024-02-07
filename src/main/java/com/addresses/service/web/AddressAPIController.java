@@ -24,7 +24,6 @@ public class AddressAPIController {
         this.addressDTOService = addressDTOService;
     }
 
-    // Retrieve address by user's ID
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> getAddressesByUserId(@PathVariable Long userId) {
         try {
@@ -34,7 +33,6 @@ public class AddressAPIController {
         }
     }
 
-    // Store address
     @PostMapping
     public ResponseEntity<?> saveAddress(@RequestBody AddressDTO addressDTO) {
         try {
@@ -58,7 +56,6 @@ public class AddressAPIController {
         }
     }
 
-    // Retrieve address by address ID
     @GetMapping("/{addressId}")
     public ResponseEntity<?> getAddressById(@PathVariable Long addressId) {
         try {
@@ -72,12 +69,12 @@ public class AddressAPIController {
     public ResponseEntity<?> deleteAddress(@PathVariable Long addressId) {
         try {
             addressService.deleteAddress(addressId);
-            return ResponseEntity.ok().build(); // Return an empty response with 200 OK to indicate successful deletion
+            return ResponseEntity.ok().build();
         } catch (EntityNotFoundException e) {
-            return ResponseEntity.notFound().build(); // Return 404 Not Found if the address doesn't exist
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting address: " + e.getMessage());
-            // You might want to handle different types of exceptions differently
+
         }
     }
 }
