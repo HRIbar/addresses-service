@@ -1,8 +1,11 @@
 package com.addresses.service.service;
 
 import com.addresses.service.database.entity.Address;
+import com.addresses.service.database.entity.User;
 import com.addresses.service.web.dto.AddressDTO;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import java.util.List;
@@ -18,6 +21,8 @@ public class AddressDTOService {
             dto.setPostalCode(address.getPostalCode());
             dto.setPostOffice(address.getPostOffice());
             dto.setUserId(address.getUserId());
+            dto.setDefaultAddress(address.getDefaultAddress());
+            dto.setDeliveryDate(address.getDeliveryDate());
         return dto;
     }
 
@@ -29,6 +34,8 @@ public class AddressDTOService {
         address.setPostalCode(addressDTO.getPostalCode());
         address.setPostOffice(addressDTO.getPostOffice());
         address.setUserId(addressDTO.getUserId());
+        address.setDefaultAddress(addressDTO.getDefaultAddress());
+        address.setDeliveryDate(addressDTO.getDeliveryDate());
         return address;
     }
 

@@ -3,6 +3,8 @@ package com.addresses.service.web.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Date;
+
 public class AddressDTO {
     @Getter @Setter
     private Long id;
@@ -15,6 +17,10 @@ public class AddressDTO {
     @Getter @Setter
     private String postOffice;
     @Getter @Setter
-    private Long userId; // Optional: Include if you want to show the User ID related to the Address
-    // Constructors, getters, and setters
+    private Long userId;
+    @Getter @Setter
+    private Boolean defaultAddress;
+    @Getter @Setter
+    private Date deliveryDate;
+
 }

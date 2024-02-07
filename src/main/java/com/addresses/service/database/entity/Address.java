@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import jakarta.persistence.*;
+import java.util.Calendar;
+import java.util.Date;
 
 
 @Entity
@@ -25,6 +27,8 @@ public class Address {
     private String postOffice;
     @Getter @Setter
     private Boolean defaultAddress;
+    @Getter @Setter
+    private Date deliveryDate;
 
     @Transient // This field is not persisted
     @Getter @Setter
@@ -37,13 +41,18 @@ public class Address {
     private User user;
 
     public Address() {
-        // Default constructor
     }
 
     public void populateUserId() {
         if (this.user != null) {
             this.userId = this.user.getId();
         }
+    }
+
+    public void initializeDeliveryDate() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MONTH, 1);
+        this.deliveryDate = calendar.getTime();
     }
 
     // Constructors, getters, and setters

@@ -4,7 +4,9 @@ import com.addresses.service.database.entity.Address;
 import com.addresses.service.database.service.AddressService;
 import com.addresses.service.service.AddressDTOService;
 import com.addresses.service.web.dto.AddressDTO;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +45,19 @@ public class AddressAPIController {
         }
     }
 
+    @PutMapping
+    public ResponseEntity<?> updateAddress(@RequestBody AddressDTO addressDTO) {
+        try {
+            Address updatedAddress = addressService.updateAddress(addressDTO);
+            AddressDTO updatedAddressDTO = addressDTOService.convertToDTO(updatedAddress); // Convert back to DTO
+            return ResponseEntity.ok(updatedAddressDTO);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error updating address: " + e.getMessage());
+        }
+    }
+
     // Retrieve address by address ID
     @GetMapping("/{addressId}")
     public ResponseEntity<?> getAddressById(@PathVariable Long addressId) {
@@ -50,6 +65,19 @@ public class AddressAPIController {
             return ResponseEntity.ok(addressDTOService.convertToDTO(addressService.findAddressById(addressId)));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Could not find address with ID: " + addressId);
+        }
+    }
+
+    @DeleteMapping("/{addressId}")
+    public ResponseEntity<?> deleteAddress(@PathVariable Long addressId) {
+        try {
+            addressService.deleteAddress(addressId);
+            return ResponseEntity.ok().build(); // Return an empty response with 200 OK to indicate successful deletion
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build(); // Return 404 Not Found if the address doesn't exist
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting address: " + e.getMessage());
+            // You might want to handle different types of exceptions differently
         }
     }
 }
