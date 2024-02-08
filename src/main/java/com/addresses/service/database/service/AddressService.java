@@ -8,6 +8,7 @@ import com.addresses.service.web.dto.AddressDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -56,6 +57,7 @@ public class AddressService {
         address.setStreet(addressDTO.getStreet());
         address.setPostalCode(addressDTO.getPostalCode());
         address.setPostOffice(addressDTO.getPostOffice());
+        address.populateUserId();
 
         return addressRepository.save(address);
     }

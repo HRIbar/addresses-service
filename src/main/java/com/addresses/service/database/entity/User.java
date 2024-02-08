@@ -1,9 +1,9 @@
 package com.addresses.service.database.entity;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,19 +12,28 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Getter @Setter
+    @Getter
+    @Setter
     private Long id;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String firstName;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String lastName;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Address> addresses = new HashSet<>();
+    private final Set<Address> addresses = new HashSet<>();
 
     public User() {
 
     }
+
+    public User(String name, String surname) {
+        this.firstName = name;
+        this.lastName = surname;
+    }
+
     public void addAddress(Address address) {
         addresses.add(address);
         address.setUser(this);
@@ -33,10 +42,5 @@ public class User {
     public void removeAddress(Address address) {
         addresses.remove(address);
         address.setUser(null);
-    }
-
-    public User(String name, String surname) {
-        this.firstName = name;
-        this.lastName = surname;
     }
 }

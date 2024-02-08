@@ -1,6 +1,5 @@
 package com.addresses.service.web;
 
-
 import com.addresses.service.database.entity.User;
 import com.addresses.service.database.service.UserService;
 import com.addresses.service.service.UserDTOService;

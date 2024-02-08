@@ -1,28 +1,25 @@
 package com.addresses.service.service;
 
 import com.addresses.service.database.entity.Address;
-import com.addresses.service.database.entity.User;
 import com.addresses.service.web.dto.AddressDTO;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.stream.Collectors;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AddressDTOService {
 
     public AddressDTO convertToDTO(Address address) {
         AddressDTO dto = new AddressDTO();
-            dto.setId(address.getId());
-            dto.setStreetNumber(address.getStreetNumber());
-            dto.setStreet(address.getStreet());
-            dto.setPostalCode(address.getPostalCode());
-            dto.setPostOffice(address.getPostOffice());
-            dto.setUserId(address.getUserId());
-            dto.setDefaultAddress(address.getDefaultAddress());
-            dto.setDeliveryDate(address.getDeliveryDate());
+        dto.setId(address.getId());
+        dto.setStreetNumber(address.getStreetNumber());
+        dto.setStreet(address.getStreet());
+        dto.setPostalCode(address.getPostalCode());
+        dto.setPostOffice(address.getPostOffice());
+        dto.setUserId(address.getUserId());
+        dto.setDefaultAddress(address.getDefaultAddress());
+        dto.setDeliveryDate(address.getDeliveryDate());
         return dto;
     }
 
@@ -39,7 +36,7 @@ public class AddressDTOService {
     }
 
     public List<AddressDTO> convertToDTOList(List<Address> addressList) {
-        return  addressList.stream()
+        return addressList.stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
     }

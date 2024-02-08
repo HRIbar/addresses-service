@@ -6,21 +6,29 @@ import lombok.Setter;
 import java.util.Date;
 
 public class AddressDTO {
-    @Getter @Setter
+    @Getter
+    @Setter
     private Long id;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String streetNumber;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String street;
-    @Getter @Setter
+    @Getter
+    @Setter
     private Integer postalCode;
-    @Getter @Setter
+    @Getter
+    @Setter
     private String postOffice;
-    @Getter @Setter
+    @Getter
+    @Setter
     private Long userId;
-    @Getter @Setter
+    @Getter
+    @Setter
     private Boolean defaultAddress;
-    @Getter @Setter
+    @Getter
+    @Setter
     private Date deliveryDate;
 
 }
