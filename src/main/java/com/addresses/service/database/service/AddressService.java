@@ -39,6 +39,7 @@ public class AddressService {
                 address.setUser(user);
                 address.initializeDeliveryDate();
             }
+            updateDefaultAddress(address);
             return addressRepository.save(address);
         } else {
             throw new Exception("A user can only have a maximum of three addresses.");
@@ -47,6 +48,16 @@ public class AddressService {
 
     public List<Address> getAllAddresses() {
         return addressRepository.findAll();
+    }
+
+    public void updateDefaultAddress(Address address) {
+        if(address.getDefaultAddress()){
+           List<Address> addressList = addressRepository.findByUser_Id(address.getUserId());
+            addressList.forEach(each -> {
+                each.setDefaultAddress(false);
+                addressRepository.save(each);
+            });
+        }
     }
 
     public Address updateAddress(AddressDTO addressDTO) {
@@ -58,6 +69,7 @@ public class AddressService {
         address.setPostalCode(addressDTO.getPostalCode());
         address.setPostOffice(addressDTO.getPostOffice());
         address.populateUserId();
+        updateDefaultAddress(address);
 
         return addressRepository.save(address);
     }

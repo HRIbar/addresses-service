@@ -45,6 +45,7 @@ public class AddressAPIController {
 
     public ResponseEntity<?> getAddressesByUserId(@PathVariable Long userId) {
         try {
+            System.out.println("getAddressesByUserId invoked");
             return ResponseEntity.ok(addressDTOService.convertToDTOList(addressService.findAddressesByUserId(userId)));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Could not find addresses for user with ID: " + userId);
@@ -63,6 +64,7 @@ public class AddressAPIController {
             content = @Content)
     public ResponseEntity<?> saveAddress(@RequestBody AddressDTO addressDTO) {
         try {
+            System.out.println("saveAddress invoked");
             if (!addressValidationService.isValidPostalCodeCombination(
                     addressDTO.getPostalCode(), addressDTO.getPostOffice())) {
                 return ResponseEntity.badRequest().body("Invalid postal code and post office combination.");
@@ -88,6 +90,7 @@ public class AddressAPIController {
             content = @Content)
     public ResponseEntity<?> updateAddress(@RequestBody AddressDTO addressDTO) {
         try {
+            System.out.println("updateAddress invoked");
             if (!addressValidationService.isValidPostalCodeCombination(
                     addressDTO.getPostalCode(), addressDTO.getPostOffice())) {
                 return ResponseEntity.badRequest().body("Invalid postal code and post office combination.");
@@ -112,6 +115,7 @@ public class AddressAPIController {
             content = @Content)
     public ResponseEntity<?> getAddressById(@PathVariable Long addressId) {
         try {
+            System.out.println("getAddressById invoked");
             return ResponseEntity.ok(addressDTOService.convertToDTO(addressService.findAddressById(addressId)));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Could not find address with ID: " + addressId);
@@ -129,6 +133,7 @@ public class AddressAPIController {
             content = @Content)
     public ResponseEntity<?> deleteAddress(@PathVariable Long addressId) {
         try {
+            System.out.println("deleteAddress invoked");
             addressService.deleteAddress(addressId);
             return ResponseEntity.ok().build();
         } catch (EntityNotFoundException e) {

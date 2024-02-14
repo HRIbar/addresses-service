@@ -40,6 +40,7 @@ public class UserAPIController {
             content = @Content(schema = @Schema(implementation = UserDTO.class)))
     public ResponseEntity<?> saveUser(@RequestBody UserDTO userDTO) {
         try {
+            System.out.println("saveUser invoked" + "id: "+ userDTO.getId() + ", name: " + userDTO.getFirstName() + ", lastname:" + userDTO.getLastName() );
             User savedUser = userService.saveUser(userDTOService.convertToEntity(userDTO));
             return ResponseEntity.ok(userDTOService.convertToDTO(savedUser));
         } catch (Exception e) {
